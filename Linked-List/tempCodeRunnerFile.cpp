@@ -1,0 +1,1 @@
+ // head->next->next->next->next->next = head->next->next;
