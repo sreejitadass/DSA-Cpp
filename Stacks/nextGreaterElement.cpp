@@ -1,31 +1,31 @@
 #include<iostream>
-#include<stack>
-#include<vector>
+#include <vector>
+#include <stack>
 using namespace std;
 
-vector<int>findNextSmaller(vector<int>&nums)
-{
-    int n = nums.size();
-    vector<int>ans(n,0);
+vector<int> findNextGreater(vector<int> &nums) {
     stack<int>s;
-    s.push(-1);
+    int n = nums.size();
+    vector<int>nge(n,-1);
 
     for(int i = n-1; i>=0; i--)
     {
-        while(!s.empty() && s.top() > nums[i])
+        while(!s.empty() && s.top() <= nums[i])
         {
             s.pop();
         }
-        ans[i] = s.top();
+        if(!s.empty())
+            nge[i] = s.top();
         s.push(nums[i]);
     }
-    return ans;
+    return nge;
 }
+
 
 int main()
 {
-    vector<int>nums = {2,1,4,3};
-    vector<int>ans = findNextSmaller(nums);
+    vector<int>nums = {6,0,8,1,3};
+    vector<int>ans = findNextGreater(nums);
     for(int i: ans)
         cout<<i<<" ";
     cout<<endl;

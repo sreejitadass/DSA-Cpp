@@ -4,42 +4,38 @@
 #include<unordered_map>
 using namespace std;
 
-vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-    unordered_map<int,int>mpp;  //(nums1 elt, index in nums2)
+vector<int> findNextGreaterArray(vector<int> &nums) {
+    stack<int>s;
+    int n = nums.size();
+    vector<int>nge(n,-1);
 
+    for(int i = n-1; i>=0; i--)
+    {
+        while(!s.empty() && s.top() <= nums[i])
+        {
+            s.pop();
+        }
+        if(!s.empty())
+            nge[i] = s.top();
+        s.push(nums[i]);
+    }
+    return nge;
+}
+
+vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> NGEnums2 = findNextGreaterArray(nums2);
+
+    unordered_map<int,int>mpp;
+    for(int i = 0;i<nums2.size();i++)
+    {
+        mpp[nums2[i]] = NGEnums2[i];
+    }
+    vector<int>ans;
     for(int i = 0;i<nums1.size();i++)
     {
-        for(int j = 0; j<nums2.size();j++)
-        {
-            if(nums1[i] == nums2[j])
-            {
-                mpp[nums1[i]] = j;
-            }
-        }
+        ans.push_back(mpp[nums1[i]]); 
     }
-
-    for (const auto& pair : mpp) {
-        cout << pair.first << " -> " << pair.second << endl;
-    }
-
-
-    vector<int>ans(nums1.size(),0);
-
-    for(auto it: mpp)
-    {
-        stack<int>s;
-        s.push(-1);
-        int n = it.second;
-        for(int i = n; i>=0; i--)
-        {
-            while(!s.empty() && s.top() > nums2[i])
-            {
-                s.pop();
-            }
-            ans[i] = s.top();
-            s.push(nums2[i]);
-        }
-    }
+    return ans;
 }
 
 int main()
