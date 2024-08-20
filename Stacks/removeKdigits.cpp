@@ -23,7 +23,7 @@ string removeKdigits(string num, int k)
         k--;
     }
 
-    //if all r removed - k==n
+    //if all are removed - k==n
     if (s.empty())
         return "0";
 

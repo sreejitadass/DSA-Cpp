@@ -36,6 +36,8 @@ public:
     
     int next(int price) {
        index++;
+       //PGE
+       //Formula: PGE_index - current_index
        while(!s.empty() && s.top().first <= price)
        {
             s.pop();
